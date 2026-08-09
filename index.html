@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>School MDM Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div>
+            <h1>School MDM Dashboard</h1>
+            <p>Daily Mid-Day Meal Student Data</p>
+        </div>
+
+        <div class="date-box">
+            <span>Today</span>
+            <strong id="currentDate">--</strong>
+            <small id="currentTime">--</small>
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <!-- LEFT SIDE -->
+        <section class="entry-section">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h2>Enter Daily Data</h2>
+                    <p>One entry per class and section per day</p>
+                </div>
+
+
+                <form id="mdmForm">
+
+                    <!-- CLASS -->
+                    <div class="form-group">
+
+                        <label for="className">
+                            Class
+                        </label>
+
+                        <select id="className" required>
+
+                            <option value="">
+                                Select Class
+                            </option>
+
+                            <option value="Class 1">Class VI</option>
+                            <option value="Class 2">Class VII</option>
+                            <option value="Class 3">Class VIII</option>
+                            <option value="Class 4">Class IX</option>
+                            <option value="Class 5">Class X</option>
+                            
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SECTION -->
+                    <div class="form-group">
+
+                        <label for="section">
+                            Section
+                        </label>
+
+                        <select id="section" required>
+
+                            <option value="">
+                                Select Section
+                            </option>
+
+                            <option value="A">Section A</option>
+                            <option value="B">Section B</option>
+                            
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TOTAL STUDENTS -->
+                    <div class="form-group">
+
+                        <label for="totalStudents">
+                            Total Students Present
+                        </label>
+
+                        <input
+                            type="number"
+                            id="totalStudents"
+                            min="0"
+                            placeholder="Enter total students"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MDM STUDENTS -->
+                    <div class="form-group">
+
+                        <label for="mdmStudents">
+                            MDM Students
+                        </label>
+
+                        <input
+                            type="number"
+                            id="mdmStudents"
+                            min="0"
+                            placeholder="Enter MDM students"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EGG STUDENTS -->
+                    <div class="form-group">
+
+                        <label for="eggStudents">
+                            Students Wanting Egg
+                        </label>
+
+                        <input
+                            type="number"
+                            id="eggStudents"
+                            min="0"
+                            placeholder="Enter egg students"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ERROR MESSAGE -->
+                    <div id="formMessage" class="form-message"></div>
+
+
+                    <!-- BUTTONS -->
+                    <div class="button-group">
+
+                        <button
+                            type="submit"
+                            class="submit-btn"
+                            id="submitBtn"
+                        >
+                            Submit Data
+                        </button>
+
+                        <button
+                            type="button"
+                            class="cancel-btn hidden"
+                            id="cancelEditBtn"
+                        >
+                            Cancel Edit
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- RULES -->
+            <div class="card information-card">
+
+                <h3>Data Entry Rules</h3>
+
+                <ul>
+                    <li>One entry is allowed per class and section each day.</li>
+                    <li>MDM students cannot exceed total students.</li>
+                    <li>Egg students cannot exceed MDM students.</li>
+                    <li>Date and time are recorded automatically.</li>
+                </ul>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- RIGHT SIDE -->
+        <section class="dashboard-section">
+
+            <!-- SUMMARY CARDS -->
+            <div class="summary-grid">
+
+                <div class="summary-card">
+                    <div class="summary-title">
+                        Total Students Present
+                    </div>
+
+                    <div
+                        class="summary-number"
+                        id="totalStudentsDisplay"
+                    >
+                        0
+                    </div>
+                </div>
+
+
+                <div class="summary-card">
+                    <div class="summary-title">
+                        MDM Students
+                    </div>
+
+                    <div
+                        class="summary-number"
+                        id="totalMdmDisplay"
+                    >
+                        0
+                    </div>
+                </div>
+
+
+                <div class="summary-card">
+                    <div class="summary-title">
+                        Want Egg
+                    </div>
+
+                    <div
+                        class="summary-number"
+                        id="totalEggDisplay"
+                    >
+                        0
+                    </div>
+                </div>
+
+
+                <div class="summary-card">
+                    <div class="summary-title">
+                        Submitted
+                    </div>
+
+                    <div
+                        class="summary-number"
+                        id="submittedDisplay"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-small">
+                        Classes / Sections
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- TABLE CARD -->
+            <div class="card table-card">
+
+                <div class="table-header">
+
+                    <div>
+                        <h2>Today's MDM Data</h2>
+
+                        <p>
+                            Data submitted today
+                        </p>
+                    </div>
+
+                    <button
+                        class="refresh-btn"
+                        id="refreshBtn"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Class</th>
+                                <th>Section</th>
+                                <th>Total</th>
+                                <th>MDM</th>
+                                <th>Egg</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="dataTableBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    id="emptyMessage"
+                    class="empty-message"
+                >
+                    No data submitted today.
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            School MDM Management System
+        </p>
+
+        <p class="footer-small">
+            Version 1.0 • Frontend Prototype
+        </p>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>	
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
