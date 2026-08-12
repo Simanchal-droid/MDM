@@ -606,3 +606,162 @@ footer {
     }
 
 }
+/* =====================================
+   DAILY THOUGHT & WORD
+===================================== */
+
+.daily-entry-section {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.daily-entry-section h3 {
+    margin-bottom: 8px;
+}
+
+.daily-entry-section input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.daily-entry-section input:disabled {
+    background: #eeeeee;
+    cursor: not-allowed;
+}
+
+.daily-entry-section button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#dailyContentMessage {
+    margin-top: 8px;
+}
+
+.daily-display-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.daily-display-section h3 {
+    margin-bottom: 5px;
+}
+
+.daily-display-section p {
+    margin-top: 0;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   THOUGHT & WORD ENTRY
+========================================== */
+
+.daily-entry-section {
+    margin-top: 20px;
+    padding: 0;
+}
+
+.daily-entry-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.daily-entry-section input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 58px;
+    padding: 0 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+.daily-entry-section input:focus {
+    border-color: #4969df;
+}
+
+.daily-entry-section input:disabled {
+    background: #eeeeee;
+    color: #555555;
+    cursor: not-allowed;
+}
+
+.daily-entry-section button {
+    width: 100%;
+    height: 58px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #4969df;
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.daily-entry-section button:hover {
+    opacity: 0.92;
+}
+
+.daily-entry-section button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+#dailyContentMessage {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   THOUGHT & WORD RIGHT DASHBOARD
+========================================== */
+
+/* ==========================================
+   THOUGHT & WORD - RIGHT DASHBOARD
+========================================== */
+
+.daily-display-section {
+    margin-top: 28px;
+    padding: 20px 22px;
+    border-top: 1px solid #d9dce3;
+}
+
+/* Individual content blocks */
+.daily-display-section .daily-content-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    border: 1px solid #e2e5eb;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Heading */
+.daily-display-section h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Text */
+.daily-display-section p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.55;
+    color: #333333;
+    word-break: break-word;
+}

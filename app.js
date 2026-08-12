@@ -952,3 +952,179 @@ setInterval(
     updateClock,
     1000
 );
+
+
+// ==========================================
+// THOUGHT & WORD OF THE DAY
+// ==========================================
+
+async function loadDailyContent() {
+
+    const today = new Date().toISOString().split("T")[0];
+
+    try {
+
+        const { data, error } = await supabaseClient
+            .from("daily_thought_word")
+            .select("*")
+            .eq("content_date", today)
+            .maybeSingle();
+
+        if (error) {
+
+            console.error("Daily content load error:", error);
+
+            return;
+        }
+
+        // No content submitted today
+        if (!data) {
+
+            document.getElementById("dashboardThought").textContent =
+                "Not added yet.";
+
+            document.getElementById("dashboardWord").textContent =
+                "Not added yet.";
+
+            document.getElementById("thoughtInput").disabled = false;
+
+            document.getElementById("wordInput").disabled = false;
+
+            document.getElementById("dailyContentSubmit").disabled = false;
+
+            document.getElementById("dailyContentMessage").textContent =
+                "";
+
+            return;
+        }
+
+        // ======================================
+        // TODAY'S CONTENT EXISTS
+        // ======================================
+
+        document.getElementById("dashboardThought").textContent =
+            data.thought;
+
+        document.getElementById("dashboardWord").textContent =
+            data.word;
+
+        // Show saved values in the boxes
+        document.getElementById("thoughtInput").value =
+            data.thought;
+
+        document.getElementById("wordInput").value =
+            data.word;
+
+        // Disable for the rest of today
+        document.getElementById("thoughtInput").disabled = true;
+
+        document.getElementById("wordInput").disabled = true;
+
+        document.getElementById("dailyContentSubmit").disabled = true;
+
+        document.getElementById("dailyContentMessage").textContent =
+            "Today's Thought and Word have already been submitted.";
+
+    }
+    catch (error) {
+
+        console.error("Daily content error:", error);
+
+    }
+}
+
+
+// ==========================================
+// SAVE TODAY'S THOUGHT & WORD
+// ==========================================
+
+async function saveDailyContent() {
+
+    const thought =
+        document.getElementById("thoughtInput").value.trim();
+
+    const word =
+        document.getElementById("wordInput").value.trim();
+
+    const message =
+        document.getElementById("dailyContentMessage");
+
+
+    if (!thought || !word) {
+
+        message.textContent =
+            "Please enter both Thought and Word.";
+
+        return;
+    }
+
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+
+    const button =
+        document.getElementById("dailyContentSubmit");
+
+    button.disabled = true;
+
+
+    try {
+
+        const { error } = await supabaseClient
+            .from("daily_thought_word")
+            .insert({
+                content_date: today,
+                thought: thought,
+                word: word
+            });
+
+
+        if (error) {
+
+            console.error("Daily content save error:", error);
+
+            if (error.code === "23505") {
+
+                message.textContent =
+                    "Today's Thought and Word have already been submitted.";
+
+                await loadDailyContent();
+
+            }
+            else {
+
+                message.textContent =
+                    "Unable to save today's content.";
+
+                button.disabled = false;
+            }
+
+            return;
+        }
+
+
+        // Successful submission
+        message.textContent =
+            "Today's Thought and Word submitted successfully.";
+
+        await loadDailyContent();
+
+    }
+    catch (error) {
+
+        console.error("Daily content exception:", error);
+
+        message.textContent =
+            "Unable to save today's content.";
+
+        button.disabled = false;
+    }
+}
+
+
+// ==========================================
+// LOAD WHEN WEBSITE OPENS
+// ==========================================
+
+loadDailyContent();
